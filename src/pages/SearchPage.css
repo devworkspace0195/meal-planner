@@ -1,0 +1,24 @@
+.search-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.search-page__status {
+  min-height: 24px;
+}
+
+.search-page__message {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.search-page__message--error {
+  color: var(--color-danger);
+}
+
+.search-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-lg);
+}
