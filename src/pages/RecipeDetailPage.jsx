@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useFetch } from '../hooks/useFetch.js';
+import { useRecipes } from '../context/RecipeContext.jsx';
 import t from '../locales/en.js';
 import './RecipeDetailPage.css';
 
@@ -20,46 +21,16 @@ function getIngredients(meal) {
 
 export default function RecipeDetailPage() {
   const { id } = useParams();
+  const { toggleSave, isSaved } = useRecipes();
 
   const url = useMemo(() => `${BASE}/lookup.php?i=${encodeURIComponent(id)}`, [id]);
   const { data, loading, error } = useFetch(url);
 
   const meal = data?.meals?.[0] ?? null;
 
-  const savedIds = useMemo(() => {
-    try {
-      return JSON.parse(localStorage.getItem('savedIds') || '[]');
-    } catch {
-      return [];
-    }
-  }, []);
-
-  const isSaved = savedIds.includes(id);
-
-  function handleSave() {
-    try {
-      const current = JSON.parse(localStorage.getItem('savedIds') || '[]');
-      const next = current.includes(id)
-        ? current.filter((s) => s !== id)
-        : [...current, id];
-      localStorage.setItem('savedIds', JSON.stringify(next));
-      window.location.reload();
-    } catch {
-      // localStorage unavailable
-    }
-  }
-
-  if (loading) {
-    return <p className="detail-status">{t.recipeDetail.loading}</p>;
-  }
-
-  if (error) {
-    return <p className="detail-status detail-status--error">{t.recipeDetail.error}</p>;
-  }
-
-  if (!meal) {
-    return <p className="detail-status">{t.recipeDetail.notFound}</p>;
-  }
+  if (loading) return <p className="detail-status">{t.recipeDetail.loading}</p>;
+  if (error) return <p className="detail-status detail-status--error">{t.recipeDetail.error}</p>;
+  if (!meal) return <p className="detail-status">{t.recipeDetail.notFound}</p>;
 
   const ingredients = getIngredients(meal);
 
@@ -68,11 +39,7 @@ export default function RecipeDetailPage() {
       <Link to="/search" className="detail__back">{t.recipeDetail.backToSearch}</Link>
 
       <div className="detail__hero">
-        <img
-          className="detail__img"
-          src={meal.strMealThumb}
-          alt={meal.strMeal}
-        />
+        <img className="detail__img" src={meal.strMealThumb} alt={meal.strMeal} />
         <div className="detail__header">
           <h1 className="detail__title">{meal.strMeal}</h1>
           <div className="detail__meta">
@@ -81,11 +48,11 @@ export default function RecipeDetailPage() {
           </div>
           <div className="detail__actions">
             <button
-              className={`detail__btn detail__btn--${isSaved ? 'saved' : 'save'}`}
-              onClick={handleSave}
-              aria-pressed={isSaved}
+              className={`detail__btn detail__btn--${isSaved(id) ? 'saved' : 'save'}`}
+              onClick={() => toggleSave(meal)}
+              aria-pressed={isSaved(id)}
             >
-              {isSaved ? t.recipeDetail.savedRecipe : t.recipeDetail.saveRecipe}
+              {isSaved(id) ? t.recipeDetail.savedRecipe : t.recipeDetail.saveRecipe}
             </button>
             {meal.strYoutube && (
               <a

@@ -34,9 +34,11 @@ const t = {
   },
   planner: {
     heading: 'Weekly Meal Planner',
-    addMeal: 'Add meal',
+    sidebarHeading: 'Your saved meals',
+    noSaved: 'Save some recipes first to plan your week.',
+    dragHint: 'Drag a meal onto a day to plan it.',
     removeMeal: 'Remove',
-    empty: 'No meal planned',
+    empty: 'Drop a meal here',
   },
   common: {
     retry: 'Retry',
