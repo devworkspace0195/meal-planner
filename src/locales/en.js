@@ -2,8 +2,23 @@ const t = {
   nav: {
     brand: 'MealPlanner',
     search: 'Search',
+    ingredients: 'By Ingredients',
     saved: 'Saved',
     planner: 'Planner',
+  },
+  ingredients: {
+    heading: 'What\'s in your fridge?',
+    subheading: 'Add ingredients you have and we\'ll find matching recipes.',
+    inputPlaceholder: 'e.g. chicken, garlic...',
+    addButton: 'Add',
+    findButton: 'Find Recipes',
+    clearAll: 'Clear all',
+    resultsHeading: 'Recipes you can make',
+    noResults: 'No recipes found with those ingredients. Try removing one.',
+    loading: 'Searching...',
+    error: 'Something went wrong. Please try again.',
+    emptyState: 'Add at least one ingredient to get started.',
+    removeIngredient: 'Remove',
   },
   search: {
     placeholder: 'Search for a meal...',

@@ -5,6 +5,7 @@ import SearchPage from './pages/SearchPage.jsx';
 import RecipeDetailPage from './pages/RecipeDetailPage.jsx';
 import SavedPage from './pages/SavedPage.jsx';
 import PlannerPage from './pages/PlannerPage.jsx';
+import IngredientsPage from './pages/IngredientsPage.jsx';
 
 export default function App() {
   return (
@@ -15,7 +16,8 @@ export default function App() {
             <Route index element={<Navigate to="/search" replace />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/recipe/:id" element={<RecipeDetailPage />} />
-            <Route path="/saved" element={<SavedPage />} />
+            <Route path="/ingredients" element={<IngredientsPage />} />
+          <Route path="/saved" element={<SavedPage />} />
             <Route path="/planner" element={<PlannerPage />} />
           </Route>
         </Routes>
